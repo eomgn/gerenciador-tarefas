@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
@@ -12,4 +6,60 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// ------------------- Models -------------------
+
+// ##### Users #####
+
+enum UserRoles {
+  admin
+  member
+}
+
+model User {
+  id String @id @default(uuid())
+  name String 
+  email String @unique
+  password String 
+
+  role UserRoles @default(member)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  teamMember TeamMember[]
+
+  @@map("users")
+}
+
+// ##### Teams #####
+
+model Team {
+  id String @id @default(uuid())
+  name String
+  description String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  teamMember TeamMember[]
+
+  @@map("teams")
+}
+
+// ##### Team Members #####
+
+model TeamMember {
+  id String @id @default(uuid())
+  userId String @map("user_id")
+  teamId String @map("team_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id])
+  team Team @relation(fields: [teamId], references: [id])
+
+  @@map("team_members")
 }
