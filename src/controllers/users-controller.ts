@@ -33,6 +33,9 @@ export class UsersController {
       },
     });
 
-    return response.json(user);
+    // ----- removendo exibição de senha na resposta (userWithoutPassword = Usuario sem a Senha)
+    const { password: _, ...userWithoutPassword } = user;
+
+    return response.json(userWithoutPassword);
   }
 }
