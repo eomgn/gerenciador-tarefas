@@ -11,6 +11,7 @@
   "description": "API de um gerenciador de tarefas",
   "dependencies": {
     "@prisma/client": "^6.14.0",
+    "bcrypt": "^6.0.0",
     "express": "^5.1.0",
     "zod": "^4.0.17"
   },
