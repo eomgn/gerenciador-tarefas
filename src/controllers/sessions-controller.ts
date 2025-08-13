@@ -2,7 +2,9 @@ import { Request, Response, NextFunction } from "express";
 import zod from "zod";
 import { prisma } from "@/database/prisma";
 import { AppError } from "@/utils/AppError";
+import { authConfig } from "@/configs/auth";
 import { compare } from "bcrypt";
+import { sign, SignOptions } from "jsonwebtoken";
 
 export class SessionsController {
   async create(request: Request, response: Response, next: NextFunction) {
@@ -31,6 +33,20 @@ export class SessionsController {
       throw new AppError("Invalid email or password");
     }
 
-    return response.json(user);
+    // ------ config jwt para criação de um token de autenticacao
+
+    const payload: object = { role: user.role ?? "member" };
+
+    const { secret } = authConfig.jwt; // desestruturando arquivo de configuracao
+
+    const options: SignOptions = {
+      subject: user.id,
+      expiresIn: "1d",
+    };
+
+    // token criado com sign:  payload ,secret, options
+    const token = sign(payload, secret, options);
+
+    return response.json({ token: token });
   }
 }
