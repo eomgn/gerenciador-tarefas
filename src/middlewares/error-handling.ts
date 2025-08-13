@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from "express";
 import { AppError } from "@/utils/AppError";
 
 // ZodError
-import { ZodError } from "zod";
+import { ZodError, z } from "zod";
 
 export function errorHandling(
   error: any,
@@ -21,7 +21,7 @@ export function errorHandling(
   if (error instanceof ZodError) {
     return response
       .status(400)
-      .json({ message: "validation error", issues: error.format });
+      .json({ message: "validation error", issues: z.treeifyError(error) });
   }
 
   // erro generico, são sendo uma instancia de AppError
