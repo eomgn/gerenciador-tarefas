@@ -6,6 +6,9 @@ import { SessionsController } from "@/controllers/sessions-controller";
 const sessionsController = new SessionsController();
 
 // middlewares
+import { ensureAuthenticated } from "@/middlewares/ensure-authenticated";
+
+sessionsRoutes.use(ensureAuthenticated);
 
 // routes
 sessionsRoutes.post("/", sessionsController.create);
