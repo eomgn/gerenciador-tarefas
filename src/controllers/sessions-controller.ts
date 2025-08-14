@@ -44,9 +44,11 @@ export class SessionsController {
       expiresIn: "1d",
     };
 
-    // token criado com sign:  payload ,secret, options
-    const token = sign(payload, secret, options);
+    const token = sign(payload, secret, options); // token criado com sign:  payload ,secret, options
 
-    return response.json({ token: token });
+    // ----- retornando user sem o password e juntamento com o token -----
+    const { password: _, ...userWithoutPassword } = user;
+
+    return response.json({ token: token, user: userWithoutPassword });
   }
 }
