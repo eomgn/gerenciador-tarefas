@@ -21,4 +21,10 @@ teamsRoutes.post(
   teamsController.create
 );
 
+teamsRoutes.put(
+  "/:id",
+  verifyAuthorization([Roles.ADMIN]),
+  teamsController.update
+);
+
 export { teamsRoutes };
