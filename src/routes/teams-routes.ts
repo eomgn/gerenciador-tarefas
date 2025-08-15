@@ -27,4 +27,6 @@ teamsRoutes.put(
   teamsController.update
 );
 
+teamsRoutes.get("/", teamsController.index);
+
 export { teamsRoutes };

@@ -29,7 +29,7 @@ export class TeamsController {
       },
     });
 
-    return response.json(team);
+    return response.status(201).json(team);
   }
 
   // ### UPDATE
@@ -70,6 +70,13 @@ export class TeamsController {
       },
     });
 
-    return response.json(team);
+    return response.status(202).json(team);
+  }
+
+  // ### INDEX
+  async index(request: Request, response: Response, next: NextFunction) {
+    const teams = await prisma.team.findMany();
+
+    return response.status(200).json(teams);
   }
 }
