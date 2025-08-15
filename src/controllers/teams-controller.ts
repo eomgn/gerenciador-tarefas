@@ -55,7 +55,7 @@ export class TeamsController {
 
     // ----- verificando se foi feita de fato alguma atualizacao -----
     if (
-      verifyUpdates.name === name &&
+      verifyUpdates.name === name ||
       verifyUpdates.description === description
     ) {
       throw new AppError("No updates made to name or description.");
