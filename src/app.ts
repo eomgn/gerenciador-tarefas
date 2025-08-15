@@ -1,7 +1,6 @@
 import express from "express";
-
-// error handling
 import { errorHandling } from "@/middlewares/error-handling";
+import { notFoundRequest } from "./middlewares/not-found-request";
 
 // configurando express
 const app = express();
@@ -15,5 +14,8 @@ app.use(routes);
 
 // utilizando error handling
 app.use(errorHandling);
+
+// route not found
+app.use(notFoundRequest);
 
 export { app };
