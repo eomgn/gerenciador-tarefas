@@ -27,6 +27,12 @@ teamsRoutes.put(
   teamsController.update
 );
 
+teamsRoutes.delete(
+  "/:id",
+  verifyAuthorization([Roles.ADMIN]),
+  teamsController.delete
+);
+
 teamsRoutes.get("/", teamsController.index);
 
 export { teamsRoutes };

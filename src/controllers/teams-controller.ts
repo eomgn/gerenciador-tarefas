@@ -79,4 +79,12 @@ export class TeamsController {
 
     return response.status(200).json(teams);
   }
+
+  // ### DELETE
+  async delete(request: Request, response: Response, next: NextFunction) {
+    // ----- capturando 'id' passado como parametro na rota -----
+    // const { id } = request.params;
+
+    return response.json({ message: "delete" });
+  }
 }
