@@ -83,8 +83,10 @@ export class TeamsController {
   // ### DELETE
   async delete(request: Request, response: Response, next: NextFunction) {
     // ----- capturando 'id' passado como parametro na rota -----
-    // const { id } = request.params;
+    const { id } = request.params;
 
-    return response.json({ message: "delete" });
+    const teamDelete = await prisma.team.delete({ where: { id } });
+
+    return response.json(teamDelete);
   }
 }
