@@ -5,6 +5,7 @@ import { prisma } from "@/database/prisma";
 import { AppError } from "@/utils/AppError";
 
 export class UsersController {
+  // ### CREATE
   async create(request: Request, response: Response, next: NextFunction) {
     const bodySchema = zod.object({
       name: zod.string().trim().min(3),
@@ -37,5 +38,16 @@ export class UsersController {
     const { password: _, ...userWithoutPassword } = user;
 
     return response.json(userWithoutPassword);
+  }
+
+  // ### INDEX
+  async index(request: Request, response: Response, next: NextFunction) {
+    // ----- capturando todos os usuários utilizando o 'prisma' -----
+    const users = await prisma.user.findMany();
+
+    // ----- removendo 'password' -----
+    const usersWithoutPassword = users.map(({ password, ...users }) => users);
+
+    return response.status(200).json(usersWithoutPassword);
   }
 }

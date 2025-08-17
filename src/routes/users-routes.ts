@@ -10,4 +10,6 @@ const usersController = new UsersController();
 // routes
 usersRoutes.post("/", usersController.create);
 
+usersRoutes.get("/", usersController.index);
+
 export { usersRoutes };
