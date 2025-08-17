@@ -85,6 +85,14 @@ export class TeamsController {
     // ----- capturando 'id' passado como parametro na rota -----
     const { id } = request.params;
 
+    // ----- verificando se existe algum registro com o 'id' passado como parametro na rota -----
+    const verifyTeamExists = await prisma.team.findFirst({ where: { id } });
+
+    if (!verifyTeamExists) {
+      throw new AppError("Team not found", 404);
+    }
+
+    // ----- realizando exclusão do registro -----
     const teamDelete = await prisma.team.delete({ where: { id } });
 
     return response.json(teamDelete);
