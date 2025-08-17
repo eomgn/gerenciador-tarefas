@@ -2,11 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { AppError } from "@/utils/AppError";
 import { verify } from "jsonwebtoken";
 import { authConfig } from "@/configs/auth";
-
-interface TokenPayload {
-  sub: string;
-  role: string;
-}
+import { TokenPayload } from "@/utils/ITokenPayload";
 
 export function ensureAuthenticated(
   request: Request,
