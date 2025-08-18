@@ -4,6 +4,7 @@ import zod from "zod";
 import { AppError } from "@/utils/AppError";
 
 export class TeamMembersController {
+  // ### CREATE
   async create(request: Request, response: Response, next: NextFunction) {
     const bodySchema = zod.object({
       user_id: zod.uuid(),
@@ -51,5 +52,26 @@ export class TeamMembersController {
     });
 
     return response.status(201).json(teamMemberRegister);
+  }
+
+  // ### DELETE
+  async delete(request: Request, response: Response, next: NextFunction) {
+    const paramsSchema = zod.object({
+      user: zod.uuid(),
+      team: zod.uuid(),
+    });
+
+    const { user: user_id, team: team_id } = paramsSchema.parse(request.params);
+
+    await prisma.teamMember.delete({
+      where: {
+        userId_teamId: {
+          userId: user_id,
+          teamId: team_id,
+        },
+      },
+    });
+
+    return response.json({ message: "delete" });
   }
 }

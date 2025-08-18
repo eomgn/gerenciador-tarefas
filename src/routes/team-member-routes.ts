@@ -21,4 +21,10 @@ teamMemberRoutes.post(
   teamMembersController.create
 );
 
+teamMemberRoutes.delete(
+  "/:user/:team",
+  verifyAuthorization([Roles.ADMIN]),
+  teamMembersController.delete
+);
+
 export { teamMemberRoutes };
