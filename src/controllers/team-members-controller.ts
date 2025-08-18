@@ -74,4 +74,17 @@ export class TeamMembersController {
 
     return response.json({ message: "delete" });
   }
+
+  // ### INDEX
+  async index(request: Request, response: Response, next: NextFunction) {
+    const teams = await prisma.teamMember.findMany({
+      select: {
+        id: true,
+        user: { select: { name: true, email: true } },
+        team: { select: { name: true, description: true } },
+      },
+    });
+
+    return response.json(teams);
+  }
 }

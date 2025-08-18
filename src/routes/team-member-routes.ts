@@ -27,4 +27,6 @@ teamMemberRoutes.delete(
   teamMembersController.delete
 );
 
+teamMemberRoutes.get("/", teamMembersController.index);
+
 export { teamMemberRoutes };
