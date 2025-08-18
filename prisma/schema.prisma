@@ -28,6 +28,7 @@ model User {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   teamMember TeamMember[]
+  tasks Tasks[]
 
   @@map("users")
 }
@@ -43,6 +44,7 @@ model Team {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   teamMember TeamMember[]
+  tasks Tasks[]
 
   @@map("teams")
 }
@@ -63,4 +65,38 @@ model TeamMember {
   @@unique([userId,teamId])
 
   @@map("team_members")
+}
+
+// ##### Tasks #####
+
+enum TasksStatus {
+  pending
+  in_progress
+  completed
+}
+
+enum TasksPriority {
+  high
+  medium
+  low
+}
+
+model Tasks {
+  id String @id @default(uuid())
+  title String
+  description String
+
+  status TasksStatus @default(pending)
+  priority TasksPriority @default(low)
+
+  assigned_to String 
+  team_id String @map("team_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  assigned_to_user User @relation(fields: [assigned_to],references: [id])
+  team Team @relation(fields: [team_id],references: [id])
+
+  @@map("tasks")
 }
