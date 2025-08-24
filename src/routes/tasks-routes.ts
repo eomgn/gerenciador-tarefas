@@ -20,4 +20,11 @@ tasksRouter.post(
   tasksController.create
 );
 
+tasksRouter.put(
+  "/:id",
+  ensureAuthenticated,
+  verifyAuthorization([Roles.ADMIN]),
+  tasksController.update
+);
+
 export { tasksRouter };
