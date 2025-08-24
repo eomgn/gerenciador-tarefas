@@ -8,8 +8,8 @@ export class TasksController {
     const bodySchema = zod.object({
       title: zod.string().trim().min(3),
       description: zod.string(),
-      assigned_to: zod.uuid().optional(),
-      team_id: zod.uuid().optional(),
+      assigned_to: zod.string().optional(),
+      team_id: zod.string().optional(),
     });
 
     const { title, description, assigned_to, team_id } = bodySchema.parse(
